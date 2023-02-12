@@ -16,6 +16,7 @@ function Game() {
 
   const submitAnswer = (e) => {
     e.preventDefault();
+    if (answer.length < 5) return;
     const newAnswer = {
       id: crypto.randomUUID(),
       name: answer,
@@ -26,7 +27,8 @@ function Game() {
   };
 
   const onInputAnswer = (e) => {
-    setAnswer(e.target.value.toUpperCase().slice(0, 5));
+    const newAnswer = e.target.value.toUpperCase().slice(0, 5);
+    setAnswer(newAnswer);
   };
 
   return (
