@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import { sample } from '../../utils';
-import { WORDS } from '../../data';
-import { AnswerInput } from './AnswerInput';
+import { sample } from "../../utils";
+import { WORDS } from "../../data";
+import { AnswerInput } from "./AnswerInput";
+import { AnswerList } from "./AnswerList";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -10,7 +11,34 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  return <AnswerInput/>;
+  const [answer, setAnswer] = useState("");
+  const [answers, setAnswers] = useState([]);
+
+  const submitAnswer = (e) => {
+    e.preventDefault();
+    const newAnswer = {
+      id: crypto.randomUUID(),
+      name: answer,
+    };
+    console.log(newAnswer);
+    setAnswers([...answers, newAnswer]);
+    setAnswer("");
+  };
+
+  const onInputAnswer = (e) => {
+    setAnswer(e.target.value.toUpperCase().slice(0, 5));
+  };
+
+  return (
+    <>
+      <AnswerList answers={answers} />
+      <AnswerInput
+        onSubmit={(e) => submitAnswer(e)}
+        onChange={(e) => onInputAnswer(e)}
+        answer={answer}
+      />
+    </>
+  );
 }
 
 export default Game;

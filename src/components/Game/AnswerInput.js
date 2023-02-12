@@ -1,25 +1,12 @@
-import { useState } from "react";
-
-export const AnswerInput = () => {
-  const [answer, setAnswer] = useState("");
-
-  const submitAnswer = (e) => {
-    e.preventDefault();
-    console.log({ answer: answer });
-  };
-
-  const onInputAnswer = (e) => {
-    setAnswer(e.target.value.toUpperCase().slice(0, 5));
-  };
-  
+export const AnswerInput = ({ onSubmit, onChange, answer }) => {
   return (
     <>
-      <form className="guess-input-wrapper" onSubmit={(e) => submitAnswer(e)}>
+      <form className="guess-input-wrapper" onSubmit={onSubmit}>
         <label htmlFor="guess-input">Guess:</label>
         <input
           id="guess-input"
           type="text"
-          onChange={(e) => onInputAnswer(e)}
+          onChange={onChange}
           value={answer}
         ></input>
       </form>
