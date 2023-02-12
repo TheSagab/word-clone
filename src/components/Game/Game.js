@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import { sample } from "../../utils";
 import { WORDS } from "../../data";
-import { AnswerInput } from "./AnswerInput";
-import { AnswerList } from "./AnswerList";
+import { GuessInput } from "./GuessInput";
+import { GuessList } from "./GuessList";
+import { checkGuess } from "../../game-helpers";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -11,33 +12,35 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const [answer, setAnswer] = useState("");
-  const [answers, setAnswers] = useState([]);
+  const [guess, setGuess] = useState("");
+  const [guesses, setGuesses] = useState([]);
 
   const submitAnswer = (e) => {
     e.preventDefault();
     if (answer.length < 5) return;
-    const newAnswer = {
+    const guessValidation = checkGuess(guess, answer)
+    const newGuess = {
       id: crypto.randomUUID(),
-      name: answer,
+      name: guess,
+      guessValidation: guessValidation
     };
-    console.log(newAnswer);
-    setAnswers([...answers, newAnswer]);
-    setAnswer("");
+    console.log(newGuess);
+    setGuesses([...guesses, newGuess]);
+    setGuess("");
   };
 
-  const onInputAnswer = (e) => {
-    const newAnswer = e.target.value.toUpperCase().slice(0, 5);
-    setAnswer(newAnswer);
+  const onInputGuess = (e) => {
+    const newGuess = e.target.value.toUpperCase().slice(0, 5);
+    setGuess(newGuess);
   };
 
   return (
     <>
-      <AnswerList answers={answers} />
-      <AnswerInput
+      <GuessList guesses={guesses} />
+      <GuessInput
         onSubmit={(e) => submitAnswer(e)}
-        onChange={(e) => onInputAnswer(e)}
-        answer={answer}
+        onChange={(e) => onInputGuess(e)}
+        guess={guess}
       />
     </>
   );

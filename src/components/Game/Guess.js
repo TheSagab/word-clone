@@ -1,13 +1,16 @@
 import { range } from "../../utils";
 
-export const Guess = ({ answer }) => {
+export const Guess = ({ guess }) => {
   return (
     <>
       <p className="guess">
         {range(5).map((index) =>
-          !!answer ? (
-            <span key={answer.id + index} className="cell">
-              {answer.name.charAt(index)}
+          !!guess ? (
+            <span
+              key={guess.id + '-' + index}
+              className={"cell " + guess.guessValidation[index].status}
+            >
+              {guess.guessValidation[index].letter}
             </span>
           ) : (
             <span key={index} className="cell"></span>

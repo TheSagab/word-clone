@@ -1,4 +1,4 @@
-export const AnswerInput = ({ onSubmit, onChange, answer }) => {
+export const GuessInput = ({ onSubmit, onChange, guess }) => {
   return (
     <>
       <form className="guess-input-wrapper" onSubmit={onSubmit}>
@@ -7,7 +7,7 @@ export const AnswerInput = ({ onSubmit, onChange, answer }) => {
           id="guess-input"
           type="text"
           onChange={onChange}
-          value={answer}
+          value={guess}
         ></input>
       </form>
     </>
